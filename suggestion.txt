@@ -1,0 +1,7 @@
+I suggest we improve the user experience by streaming the AI's responses, similar to how ChatGPT and Gemini work.
+
+Currently, the application waits for the entire response to be generated before displaying it. By implementing streaming, the response will be displayed word-by-word as it's being generated. This will make the application feel much more responsive and interactive.
+
+This change would involve updating both the backend and the frontend.
+
+Would you like me to proceed with this change?
