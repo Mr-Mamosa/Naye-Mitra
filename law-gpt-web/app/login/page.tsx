@@ -57,9 +57,11 @@ export default function LoginPage() {
 
       // 3. Set the LocalStorage Token
       // If logging in (simulation), we check the email to mock a role, otherwise use the signup role
-      let assignedRole = accountType;
+      let assignedRole = "user";
+
       if (isLogin) {
-        assignedRole = email.includes("advocate") ? "admin" : "user";
+        // Option 1: Grant admin to everyone who logs in for testing purposes
+        assignedRole = "admin";
       } else {
         assignedRole = accountType === "advocate" ? "admin" : "user";
       }

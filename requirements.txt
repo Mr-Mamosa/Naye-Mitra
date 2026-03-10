@@ -11,3 +11,4 @@ tqdm
 textual
 fastapi
 uvicorn
+scikit-learn

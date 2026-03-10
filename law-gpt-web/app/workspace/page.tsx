@@ -43,6 +43,7 @@ export default function LawGPTInterface() {
   // Auth & Timer States
   const [timeLeft, setTimeLeft] = useState(300); // 300 seconds = 5 minutes
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // <--- ADD THIS LINE
 
   // Click outside listener for the dropdown menu
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -58,6 +59,7 @@ export default function LawGPTInterface() {
 
   // 1. Check if user is an Admin on load
   useEffect(() => {
+    setIsMounted(true);
     const role = localStorage.getItem("lawgpt_role");
     if (role === "admin") {
       setIsAdmin(true);
@@ -391,13 +393,18 @@ export default function LawGPTInterface() {
             <div className="flex items-center gap-2 sm:gap-3">
 
               {/* Status Badge */}
-              {!isAdmin ? (
+              {!isMounted ? (
+                // 1. Show a subtle loading pulse while checking local storage
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] w-24 h-8 bg-[var(--glass-hover)] animate-pulse border border-[var(--border-color)]"></div>
+              ) : !isAdmin ? (
+                // 2. Show the Timer for Guests
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-bold tracking-widest uppercase font-mono transition-colors bg-red-500/10 text-red-600 border border-red-500/20">
                   <Clock size={12} className={timeLeft < 60 ? 'animate-pulse' : ''} />
                   <span className="hidden sm:inline">{timeLeft > 0 ? `TRIAL: ${formatTime(timeLeft)}` : 'TRIAL EXPIRED'}</span>
                   <span className="sm:hidden">{formatTime(timeLeft)}</span>
                 </div>
               ) : (
+                // 3. Show Verified Badge for Admins
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-bold tracking-widest uppercase bg-[#D34343]/10 text-[#D34343] border border-[#D34343]/20">
                   <ShieldCheck size={12} /> <span className="hidden sm:inline">VERIFIED USER</span>
                 </div>
