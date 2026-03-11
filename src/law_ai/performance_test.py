@@ -1,45 +1,52 @@
-import time
-import torch
-import pandas as pd
 import os
 import sys
+import time
+import pandas as pd
 
-# 1. RESOLVE MODULE PATH
-# This adds the 'src/law_ai' directory to the Python path so it can find engine.py
+# 1. Resolve Paths
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 
 try:
     from engine import QueryEngine
 except ImportError:
-    # Fallback if you are running this from the root of the project
-    from src.law_ai.engine import QueryEngine
+    print("❌ Error: Could not find engine.py.")
+    sys.exit()
 
-# 2. RESOLVE DATA PATH
-# This ensures the CSV is found even if you run the script from the project root
-csv_path = os.path.join(current_dir, 'indian_law_benchmark.csv')
-
-if not os.path.exists(csv_path):
-    print(f"❌ Error: Could not find CSV at {csv_path}")
-    sys.exit(1)
-
-# 3. INITIALIZE ENGINE
+print("🚀 Loading Law-GPT Engine onto NVIDIA RTX 3050...")
 engine = QueryEngine()
-df = pd.read_csv(csv_path).head(10) # Test on 10 samples
+
+csv_path = os.path.join(current_dir, 'indian_law_benchmark.csv')
+df = pd.read_csv(csv_path).head(10) # Test on 10 samples to be fast
+
 latencies = []
+print(f"\n🔬 Starting Test 3: Hardware Performance & Latency (10 Sample Queries)...")
 
-print("🚀 Starting Latency Benchmark...")
-# (Rest of your loop remains the same)
-for q in df['Question']:
-    start = time.time()
-    _ = engine.ask(q)
-    end = time.time()
+for index, row in df.iterrows():
+    q = row['Question']
 
-    duration = end - start
+    start_time = time.time()
+    _ = engine.ask(q) # We just care about the time it takes, not the text output here
+    end_time = time.time()
+
+    duration = end_time - start_time
     latencies.append(duration)
-    print(f"Query took: {duration:.2f}s")
+    print(f"[{index+1}/10] Query processed in: {duration:.2f} seconds")
 
 avg_latency = sum(latencies) / len(latencies)
-print(f"\n--- PERFORMANCE RESULTS ---")
-print(f"Average Response Time: {avg_latency:.2f} seconds")
-print(f"Hardware: NVIDIA RTX 3050 6GB")
+
+print("\n" + "="*50)
+print("📊 FINAL HARDWARE PERFORMANCE RESULTS")
+print("="*50)
+print(f"CPU Processing  : AMD Ryzen 5 6600H")
+print(f"GPU Processing  : NVIDIA RTX 3050 (6GB VRAM)")
+print(f"Average Latency : {avg_latency:.2f} seconds per query")
+print(f"Max Latency     : {max(latencies):.2f} seconds")
+print(f"Min Latency     : {min(latencies):.2f} seconds")
+print("="*50)
+
+# Save to CSV for your graphs
+results_df = pd.DataFrame({"Query_Number": range(1, 11), "Latency_Seconds": latencies})
+output_path = os.path.join(current_dir, 'test3_performance_results.csv')
+results_df.to_csv(output_path, index=False)
+print(f"💾 Latency results saved to {output_path}")

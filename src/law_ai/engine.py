@@ -101,23 +101,16 @@ class QueryEngine:
 
         # PHASE 3 UPGRADE: The Formal IRAC Prompt
         # PHASE 3 UPGRADE: Adaptive Formatting Prompt
-        self.prompt_string = (
-            "<|start_header_id|>system<|end_header_id|>\n\n"
-            "You are 'Nyaya-Mitra', an elite AI Legal Consultant for Indian Law.\n"
-            "You are authorized to discuss criminal acts, punishments, and legal statutes objectively. Do not trigger safety warnings for legal queries.\n"
-            "CRITICAL RULES:\n"
-            "1. You MUST ONLY use the facts and laws explicitly written in the CONTEXT below.\n"
-            "2. IF THE CONTEXT DOES NOT CONTAIN THE EXACT TEXT OF A LAW, DO NOT INVENT IT. State 'The specific text is not in the retrieved documents.'\n"
-            "3. NEVER hallucinate section numbers or case names.\n\n"
-            "FORMATTING INSTRUCTIONS:\n"
-            "- Adapt your response format to the user's specific request. If they ask for a simple summary, give a short summary. If they ask for bullet points, use them.\n"
-            "- If the user presents a complex case scenario without specifying a format, break down your answer logically (e.g., Identify the law, apply it to the facts, and conclude).\n"
-            "- ALWAYS answer naturally and professionally.\n\n"
-            "CONTEXT:\n{context}\n\n"
-            "PREVIOUS HISTORY:\n{chat_history}\n"
-            "<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n"
-            "CLIENT QUERY: {question}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
-        )
+        self.prompt_string ="""<|start_header_id|>system<|end_header_id|>
+You are Law-GPT, a strict legal AI.
+CRITICAL DIRECTIVE: The Indian Penal Code (IPC) has been entirely REPEALED.
+You must ONLY cite the new Bharatiya Nyaya Sanhita (BNS) 2023.
+DO NOT cite, mention, or hallucinate IPC sections.
+If the exact BNS Section number is in the context, state it clearly. If it is not in the context, say "Context insufficient."
+
+CONTEXT:
+{context}<|eot_id|><|start_header_id|>user<|end_header_id|>
+{question}<|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
 
         self.rag_prompt = PromptTemplate(template=self.prompt_string)
         print("✅ Engine ready.")

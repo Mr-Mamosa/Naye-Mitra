@@ -31,4 +31,4 @@ export default function TypingAnimation({ text }: { text: string }) {
   }, [text]);
 
   return <span dangerouslySetInnerHTML={parseMarkdown(displayedText)} />;
-}
+}w

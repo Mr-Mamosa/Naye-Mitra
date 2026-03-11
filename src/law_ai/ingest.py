@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import chromadb
 from tqdm import tqdm
@@ -8,8 +9,14 @@ import pypdf
 from rank_bm25 import BM25Okapi
 import pickle
 import string
+import shutil
 from pathlib import Path
 
+# Fix the path so it can always find your config.py file
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+
+# THE MISSING IMPORTS:
 from config import (
     DATA_DIR,
     CHROMA_DB_PATH,
@@ -35,7 +42,6 @@ def extract_text_from_pdf(pdf_path):
 
 def load_documents():
     documents = []
-
     # 1. Load BNS 2023 PDF (CRITICAL)
     bns_path = Path(DATA_DIR) / "BNS_2023.pdf"
     if bns_path.exists():
@@ -49,48 +55,32 @@ def load_documents():
     else:
         print(f"⚠️ BNS 2023 PDF not found at {bns_path}")
 
-    # # 2. Load the Cleaned Supreme Court Judgments (NEW)
-    # json_path = Path(DATA_DIR) / "cleaned_judgments.json"
-    # if json_path.exists():
-    #     print(f"📖 Loading Cleaned SC Judgments from {json_path}...")
-    #     try:
-    #         with open(json_path, 'r', encoding='utf-8') as f:
-    #             judgments = json.load(f)
-    #             for j in judgments:
-    #                 documents.append({
-    #                     "text": j.get("text", ""),
-    #                     "source": j.get("source", "Supreme Court Judgment"),
-    #                     "title": j.get("title", "Unknown Case")
-    #                 })
-    #         print(f"✅ Successfully loaded {len(judgments)} SC Headnotes.")
-    #     except Exception as e:
-    #         print(f"❌ Error loading JSON: {e}")
-    # else:
-    #     print(f"⚠️ Cleaned judgments JSON not found at {json_path}")
-
     return documents
 
 def main():
     print("🚀 Starting Unified Ingestion Pipeline...")
 
-    # Ensure directory exists
+    # 1. THE HARD NUKE: Physically delete the folder to kill corruption at the root
+    if os.path.exists(CHROMA_DB_PATH):
+        print(f"🗑️ Physically deleting old ChromaDB folder to prevent corruption...")
+        try:
+            shutil.rmtree(CHROMA_DB_PATH)
+            import time
+            time.sleep(2) # Give Arch Linux a moment to release file locks
+        except Exception as e:
+            print(f"⚠️ Could not physically delete folder: {e}")
+
+    # Ensure directory exists fresh
     os.makedirs(os.path.dirname(CHROMA_DB_PATH), exist_ok=True)
 
+    # 2. Initialize fresh client
     client = chromadb.PersistentClient(path=str(CHROMA_DB_PATH))
 
-    # Safely Reset
-    try:
-        client.delete_collection(COLLECTION_NAME)
-        import time
-        time.sleep(2) # CRITICAL: Wait for file system on Linux
-        print("🗑️ Deleted old ChromaDB collection.")
-    except Exception as e:
-        print(f"ℹ️ No existing collection to delete or error: {e}")
-
-    collection = client.create_collection(name=COLLECTION_NAME)
+    # 3. SAFER CREATION: Use get_or_create instead of just create
+    collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
     print(f"🧠 Loading Embedding Model on GPU...")
-    # Switched to CUDA for your RTX 3050
+    # Using CUDA to ensure your RTX 3050 processes this fast
     embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME, device="cuda")
 
     raw_docs = load_documents()
@@ -98,8 +88,6 @@ def main():
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP
     )
-
-    # ... [Rest of your chunking code is perfect] ...
 
     print("✂️ Chunking documents...")
     chunked_docs = []
@@ -112,7 +100,6 @@ def main():
         for i, chunk in enumerate(chunks):
             chunked_docs.append(chunk)
 
-            # Store source and title so the AI can cite it properly
             chunk_metadatas.append({
                 "source": doc["source"],
                 "title": doc.get("title", "Unknown")
@@ -122,6 +109,7 @@ def main():
 
     print(f"📦 Prepared {len(chunked_docs)} text chunks. Saving to ChromaDB...")
 
+    # INGESTION LOOP
     for i in tqdm(range(0, len(chunked_docs), INGEST_BATCH_SIZE), desc="Ingesting Vector DB"):
         batch_end = i + INGEST_BATCH_SIZE
         batch_text = chunked_docs[i:batch_end]
@@ -146,7 +134,10 @@ def main():
         tokenized_corpus = [tokenize(doc) for doc in tqdm(chunked_docs, desc="Tokenizing corpus")]
         bm25 = BM25Okapi(tokenized_corpus)
 
-        # Save the BM25 index and the raw chunks/metadatas!
+        # Delete old BM25 to prevent mismatches
+        if os.path.exists(BM25_INDEX_PATH):
+            os.remove(BM25_INDEX_PATH)
+
         with open(BM25_INDEX_PATH, "wb") as f:
             pickle.dump((bm25, chunked_docs, chunk_metadatas), f)
         print(f"✅ BM25 Index cached successfully at: {BM25_INDEX_PATH}")
