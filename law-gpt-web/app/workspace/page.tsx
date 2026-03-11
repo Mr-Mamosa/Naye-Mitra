@@ -98,7 +98,7 @@ export default function LawGPTInterface() {
 
   const fetchSidebarCases = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/v1/cases/lawyer_1");
+      const response = await fetch("https://YOUR-NGROK-URL.ngrok-free.app/api/v1/cases/lawyer_1");
       if (response.ok) {
         const data = await response.json();
         setCases(data.cases);
@@ -114,7 +114,7 @@ export default function LawGPTInterface() {
 
   const fetchCaseMessages = async (caseId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/case/${caseId}`);
+      const response = await fetch(`https://YOUR-NGROK-URL.ngrok-free.app/api/v1/case/${caseId}`);
       if (response.ok) {
         const data = await response.json();
         const historyMessages = data.messages.map((msg: any) => ({
@@ -145,7 +145,7 @@ export default function LawGPTInterface() {
   const handleDeleteCase = async (caseId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/case/${caseId}`, { method: "DELETE" });
+      const response = await fetch(`https://YOUR-NGROK-URL.ngrok-free.app/api/v1/case/${caseId}`, { method: "DELETE" });
       if (response.ok) {
         setCases((prev) => prev.filter((c) => c.case_id !== caseId));
         if (activeCaseId === caseId) handleNewCase();
@@ -163,7 +163,7 @@ export default function LawGPTInterface() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/consult", {
+      const response = await fetch("https://YOUR-NGROK-URL.ngrok-free.app/api/v1/consult", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

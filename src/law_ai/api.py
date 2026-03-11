@@ -1,3 +1,7 @@
+import os
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -7,9 +11,9 @@ import uvicorn
 import uuid
 from pydantic import BaseModel
 from logger import get_user_cases, get_case_messages, delete_case
-
 from engine import QueryEngine
-from logger import get_user_cases
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 1. Lifespan Manager: Use app.state for future-proof state management
 @asynccontextmanager
