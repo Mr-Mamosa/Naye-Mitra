@@ -1,0 +1,101 @@
+# =================================================================
+# Law-GPT / LawThinker Project Specifics
+# =================================================================
+
+# Exclude large AI Models (GGUF, Safetensors, etc.)
+# These are too big for GitHub and should be downloaded separately.
+*.gguf
+*.bin
+*.onnx
+data/models/
+model/
+../model/
+
+# Exclude Local Datasets & Databases
+# You don't want to push raw PDFs or your local Chroma vector store.
+data/*.pdf
+data/*.txt
+data/*.sqlite3
+data/chroma_db/
+data/supreme_court_judgments/
+data/audit_trail.db
+*.jsonl
+
+# Exclude Execution Artifacts
+results/
+logs/
+*.log
+
+# =================================================================
+# Frontend (React / Vite / Next.js)
+# =================================================================
+
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# Vite/Next.js environment variables (Keep these secret!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =================================================================
+# Backend (Python / Machine Learning)
+# =================================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+.conda/
+bin/
+lib/
+develop-eggs/
+dist/
+eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# =================================================================
+# System & IDEs
+# =================================================================
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# =================================================================
+# Shell & Scripts
+# =================================================================
+*.sh
+!setup.sh  # Example: Keep setup.sh if it's needed for installation

@@ -1,0 +1,51 @@
+Question,BNS_Ground_Truth (Your System),IPC_Trap_Answer (General LLM),Vector_Hit,Hybrid_Hit
+A client comes to you claiming someone cheated them out of money through deceit. Under what section should the FIR be registered?,Section 318 BNS,Section 420 IPC,0,0
+A person intentionally causes the death of another person. What section applies for the punishment of this crime?,Section 103 BNS,Section 302 IPC,1,1
+A driver recklessly runs over a pedestrian and escapes the scene without reporting the incident to the police. What section covers this aggravated hit-and-run offense?,Section 106(2) BNS,Section 304A IPC,0,0
+What section outlines the punishment for criminal defamation?,Section 356 BNS,Section 499/500 IPC,1,1
+A group of five people jointly commit a robbery. What is the specific legal charge for this?,Section 310 BNS,Section 395 IPC,1,1
+A man commits the offense of rape. What section governs the punishment for this act?,Section 64 BNS,Section 376 IPC,1,1
+A person snatches a gold chain from a woman walking on the street. What is the specific section for this offense?,Section 304 BNS,Section 379/356 IPC (Snatching is a new specific BNS offense),1,1
+A group of individuals commits a murder based on the victim's caste. What specific legal provision addresses this hate crime?,Section 103(2) BNS,Section 302 IPC (Mob lynching is new in BNS),0,0
+What is the primary section that penalizes acts endangering the sovereignty unity and integrity of India?,Section 152 BNS,Section 124A IPC (Sedition),1,1
+Two or more people agree to commit an illegal act. What section defines this criminal conspiracy?,Section 61 BNS,Section 120B IPC,0,1
+A person moves movable property out of the possession of another without their consent. What is the charging section for theft?,Section 303 BNS,Section 379 IPC,0,1
+Someone intentionally puts a person in fear of injury to dishonestly induce them to hand over money. What is the section for extortion?,Section 308 BNS,Section 384 IPC,1,1
+A syndicate is involved in kidnapping extortion and contract killings. Under what section is organized crime penalized?,Section 111 BNS,Will hallucinate MCOCA or fail (Organized crime is new to general criminal code),1,1
+A gang is involved in unauthorized ticket selling gambling and picking pockets. What section deals with this petty organized crime?,Section 112 BNS,Will fail or hallucinate local police acts,1,1
+Someone causes grievous hurt to another person using a dangerous weapon. Under which section will they be charged?,Section 118 BNS,Section 326 IPC,1,1
+A husband subjects his wife to cruelty. What section provides the punishment for this?,Section 85 BNS,Section 498A IPC,1,1
+What section deals with the offense of stalking?,Section 78 BNS,Section 354D IPC,1,1
+A person intentionally insults someone to provoke a breach of peace. What section applies?,Section 352 BNS,Section 504 IPC,1,1
+Someone publishes a false rumor with the intent to create enmity between different religious groups. What is the section?,Section 196 BNS,Section 153A IPC,1,1
+A person uses criminal force to outrage the modesty of a woman. What section governs this?,Section 74 BNS,Section 354 IPC,1,1
+What section penalizes the act of kidnapping a minor from lawful guardianship?,Section 137 BNS,Section 363 IPC,1,1
+A person commits the offense of voyeurism. Under what section will they be prosecuted?,Section 77 BNS,Section 354C IPC,1,1
+A public servant disobeys the law with the intent to cause injury to any person. What is the relevant section?,Section 255 BNS,Section 166 IPC,0,1
+Someone gives false evidence in a judicial proceeding. What section prescribes the punishment for perjury?,Section 229 BNS,Section 193 IPC,1,1
+What section applies when an individual commits a public nuisance?,Section 292 BNS,Section 290 IPC,1,1
+Someone causes the death of a woman within seven years of her marriage due to dowry demands. What is the charging section?,Section 80 BNS,Section 304B IPC,1,1
+What section deals with criminal intimidation?,Section 351 BNS,Section 506 IPC,1,1
+A person dishonestly receives stolen property knowing it to be stolen. What section applies?,Section 317 BNS,Section 411 IPC,1,1
+A person counterfeits Indian currency notes. What section covers this offense?,Section 179 BNS,Section 489A IPC,1,1
+What section penalizes the act of bigamy (marrying again during the lifetime of a spouse)?,Section 82 BNS,Section 494 IPC,1,1
+A person commits criminal trespass by entering into another's property to commit an offense. What is the section?,Section 329 BNS,Section 441/447 IPC,1,1
+Someone attempts to commit robbery. Under what section will they be charged?,Section 309 BNS,Section 393 IPC,1,1
+A person causes a miscarriage without the woman's consent. What is the relevant section?,Section 89 BNS,Section 313 IPC,1,1
+What section outlines the right of private defense of the body?,Section 35 BNS,Section 97 IPC,1,1
+A person commits forgery for the purpose of cheating. What section applies?,Section 338 BNS,Section 468 IPC,1,1
+Someone wrongfully confines a person in secret. What is the charging section?,Section 130 BNS,Section 346 IPC,0,0
+What section deals with an unlawful assembly of five or more persons?,Section 189 BNS,Section 141 IPC,1,1
+A person commits the offense of rioting while armed with a deadly weapon. What section applies?,Section 193 BNS,Section 148 IPC,1,1
+Someone harbors a person they know to be an offender to screen them from legal punishment. What is the section?,Section 239 BNS,Section 212 IPC,0,1
+A person causes disappearance of evidence of an offense. What section applies?,Section 238 BNS,Section 201 IPC,1,1
+What section penalizes an individual who attempts to commit murder?,Section 109 BNS,Section 307 IPC,0,0
+Under what section is the act of wrongful restraint punishable?,Section 126 BNS,Section 341 IPC,0,1
+What section provides punishment for voluntarily causing simple hurt?,Section 115 BNS,Section 323 IPC,1,1
+A person engages in a criminal conspiracy to commit an offense punishable with life imprisonment. What is the section?,Section 61 BNS,Section 120B IPC,0,1
+What is the punishment section for an attempt to commit offenses punishable with imprisonment for life?,Section 62 BNS,Section 511 IPC,0,1
+A person performs an act rashly or negligently as to endanger human life. What section applies?,Section 125 BNS,Section 336 IPC,0,1
+What section covers the offense of criminal misappropriation of property?,Section 314 BNS,Section 403 IPC,1,1
+A person is found guilty of criminal breach of trust. What is the section?,Section 316 BNS,Section 406 IPC,1,1
+A person hires another person to join an unlawful assembly. What is the section?,Section 192 BNS,Section 150 IPC,1,1
+Under what section is the hiring of a child to commit an offense penalized?,Section 95 BNS,New provision in BNS likely hallucinated by LLM,1,1
